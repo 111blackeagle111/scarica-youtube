@@ -12,6 +12,21 @@
 
 Lo script è stato verificato su Linux. Su macOS richiede una versione di Bash che soddisfi il requisito sopra. Su Windows puoi eseguirlo da un ambiente WSL con le dipendenze installate al suo interno. macOS e WSL non sono stati provati per questa versione.
 
+## Download in parallelo
+
+Lo script chiama `yt-dlp` prima per leggere il titolo e poi per scaricare, in sequenza. Durante il trasferimento il downloader può fare più richieste in parallelo. Il meccanismo dipende dal formato e dal downloader selezionato.
+
+- Con il downloader nativo di `yt-dlp`, `-N` (`--concurrent-fragments`) imposta quanti segmenti HLS o DASH, già forniti dal server, scaricare contemporaneamente. [Opzioni di yt-dlp](https://github.com/yt-dlp/yt-dlp#download-options)
+- Con `aria2c`, più connessioni possono scaricare intervalli diversi dello stesso file HTTP. Il server deve supportare le richieste per intervalli e il file deve essere abbastanza grande da poter essere suddiviso. [Manuale di aria2c](https://aria2.github.io/manual/en/html/aria2c.html#cmdoption-s)
+
+Le parti vengono ricomposte nel file finale. Il guadagno dipende dalla connessione, dal formato e dai limiti del server.
+
+## Riprendere un download interrotto
+
+Dopo un’interruzione, anche con `Ctrl+C`, rilancia il comando con lo stesso URL, lo stesso nome di destinazione, la stessa cartella e le stesse opzioni di formato. `yt-dlp` abilita la ripresa per impostazione predefinita con `--continue`, quando la sorgente e il downloader la supportano. [Opzioni di yt-dlp](https://github.com/yt-dlp/yt-dlp#filesystem-options)
+
+Conserva il file parziale `.part` e, se usi `aria2c`, anche il file di controllo `.aria2` che registra le parti già scaricate. [Manuale di aria2c](https://aria2.github.io/manual/en/html/aria2c.html#control-file)
+
 ## Prova con un file locale
 
 Dalla cartella del repository, esegui questo blocco. Crea un breve video sintetico in una cartella temporanea e usa una sottocartella separata per la copia. Al prompt, premi Invio per ottenere `originale.mp4` oppure digita un nome senza estensione.
