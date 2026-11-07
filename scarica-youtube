@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# scarica-youtube — scarica un video chiedendo se mantenere o cambiare il nome
+# Uso: scarica-youtube [URL] [opzioni extra passate a yt-dlp]
+set -euo pipefail
+
+URL="${1:-}"
+EXTRA=("${@:2}")
+
+if [[ -z "$URL" ]]; then
+    read -rp "URL del video: " URL
+    [[ -z "$URL" ]] && { echo "Nessun URL, esco."; exit 1; }
+fi
+
+if [[ "$URL" == -* ]]; then
+    printf 'URL non valido: non può iniziare con "-".\n' >&2
+    exit 1
+fi
+
+echo "Recupero le informazioni..."
+TITLE="$(yt-dlp --get-title --no-playlist "$URL" "${EXTRA[@]}")"
+echo "Titolo originale: $TITLE"
+
+read -rp "Invio per mantenere questo nome, oppure scrivi il nome da usare: " NAME
+
+if [[ -n "$NAME" ]]; then
+    NAME="${NAME//\//-}"   # uno slash nel nome creerebbe sottocartelle
+    NAME="${NAME//%/%%}"   # yt-dlp usa % nei modelli di nome
+    OUT="$NAME.%(ext)s"
+else
+    OUT="%(title)s.%(ext)s"
+fi
+
+echo "Cartella di salvataggio: $(pwd)"
+yt-dlp --no-playlist -o "$OUT" "$URL" "${EXTRA[@]}"
