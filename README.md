@@ -1,5 +1,9 @@
 # scarica-youtube
 
+![Un terminale invia quattro flussi di fotogrammi in parallelo, che si riuniscono in un file video](assets/cover.png)
+
+*Grazie a OpenAI per aver generato la copertina.*
+
 `scarica-youtube` è uno script Bash che mostra il titolo trovato da `yt-dlp` prima del download. Premi Invio per usare il titolo originale oppure digita il nome che vuoi dare al file. Lo script aggiunge l’estensione del formato scaricato.
 
 ## Dipendenze
