@@ -6,6 +6,8 @@
 
 `scarica-youtube` è uno script Bash che mostra il titolo trovato da `yt-dlp` prima del download. Premi Invio per usare il titolo originale oppure digita il nome che vuoi dare al file. Lo script aggiunge l’estensione del formato scaricato.
 
+Su Medium racconto come è nato lo script e come sono arrivato ai download in parallelo. [Leggi l’articolo](https://medium.com/@andream-devops/volevo-scaricare-un-video-di-youtube-senza-passare-da-altri-siti-ae254c3f64b5)
+
 ## Dipendenze
 
 - **Bash 4.4 o successivo** e **`yt-dlp`** disponibili nel `PATH`.
